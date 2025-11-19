@@ -4,33 +4,14 @@
 Program 1: 
 Write a program to read data from the standard input device and write it 
 on the screen(using read()/write() system calls) 
-write()/read() system call 
-read() and write() system calls are used to read and write data respectively to a file descriptor. 
-To understand the concept of write ()/read() system calls let us first start with write() system 
-call. 
-write()  
-write() system call is used to write to a file descriptor. In other words write() can be used to 
-write to any file (all hardware are also referred as file in Linux) in the system but rather than 
-specifying the file name, you need to specify its file descriptor. 
-Syntax: 
-#include<unistd.h> 
-ssize_t write (int fd, const void *buf,size_t count); 
-The first parameter (fd) is the file descriptor where the file is to be written. The data that is to 
-be written is specified in the second parameter. Finally, the third parameter is the total bytes 
-that are to be written. 
-read() 
-The use of read() system call is to read from a file descriptor. The working is same as write(), 
-the only difference is read() will read the data from file pointed to by file descriptor. 
+
 Syntax: 
 #include<unistd.h> 
 ssize_t read(int fd,const void  *buf,size_t count); 
 The first parameter is the file descriptor. The second parameter is the buffer where the 
 read data will be saved. Lastly, the third parameter is the number of bytes that is  to be read. 
 V Semester 
-Page 1 
-Operating System (Intergrated)Lab Manual- P21CS504 
  
-V Semester Page 2 
  
  
 Program: 
@@ -70,14 +51,7 @@ Operating System (Intergrated)Lab Manual- P21CS504
 Program 2: 
 Write a program to print 10 characters starting from the 10th character from a 
 file(lseek() system call) 
-lseek() system call repositions the read/write file offset i.e., it changes the positions of the 
-read/write pointer within the file. In every file any read or write operations happen at the 
-position pointed to by the pointer. lseek () system call helps us to manage the position of this 
-pointer within a file. e.g., let’s suppose the content of a file F1 is “1234567890” but you want 
-the content to be “12345hello”. You simply can’t open the file and write “hello” because if 
-you do so then “hello” will be written in the very beginning of the file. This means you need 
-to reposition the pointer after ‘5’ and then start writing “hello”. lseek () will help to reposition 
-the pointer and write () will be used to write “hello” 
+
 Syntax: 
 #include<sys/types.h> 
 #include<unistd.h> 
@@ -128,40 +102,7 @@ V Semester Page 5
  
 Program 3: 
 Write a program to implement IPC using shared memory. 
-Inter Process Communication through shared memory is a concept where two or more 
-process can access the common memory and communication is done via this shared 
-memory where changes made by one process can be viewed by another process. 
-The problem with pipes, fifo and message queue – is that for two process to exchange 
-information, the information has to go through the kernel. 
-• Server reads from the input file. 
-• The server writes this data in a message using either a pipe, fifo or message queue. 
-• The client reads the data from the IPC channel, again requiring the data to be copied     
-       from kernel’s IPC buffer to the client’s buffer. 
-• Finally the data is copied from the client’s buffer. 
-A total of four copies of data are required (2 read and 2 write). So, shared memory provides 
-a way by letting two or more processes share a memory segment. With Shared Memory the 
-data is only copied twice – from input file into shared memory and from shared memory to 
-the output file. 
-SYSTEM CALLS USED ARE: 
-ftok(): is use to generate a unique key. 
-shmget():     int shmget(key_t,size_tsize,intshmflg);  
-         upon successful completion, shmget() returns an identifier for the shared      
-                     memory segment. 
-shmat(): Before you can use a shared memory segment, you have to attach yourself to it     
-               using shmat().  
-   void *shmat(int shmid ,void *shmaddr ,int shmflg); 
-shmid is shared memory id.  
-shmaddr specifies specific address to use but we should set it to zero and OS     
-                   will automatically choose the address. 
-shmdt(): When you’re done with the shared memory segment, your program should 
-               detach itself from it using shmdt(). int shmdt(void *shmaddr); 
-shmctl(): when you detach from shared memory, it is not destroyed. So, to destroy 
-               shmctl() is used.  
-Operating System (Intergrated)Lab Manual- P21CS504 
- 
-V Semester Page 6 
- 
-                         shmctl(int shmid,IPC_RMID,NULL); 
+
  
 Shared Memory for Writer Process 
 #include<stdio.h> 
@@ -190,14 +131,7 @@ strcpy(shared_memory,buff); //data written to shared memory
 printf("You wrote : %s\n",(char *)shared_memory); 
 } 
  
-How it works? 
-shmget() function creates a segment with key 2345, size 1024 bytes and read and write 
-permissions for all users. It returns the identifier of the segment which gets store in shmid. 
-This identifier is used in shmat() to attach the shared segment to the address space of the 
-process. NULL in shmat() means that the OS will itself attach the shared segment at a 
-Operating System (Intergrated)Lab Manual- P21CS504 
-suitable address of this process. Then some data is read from the user using read() system call 
-and it is finally written to the shared segment using strcpy() function. 
+
 Output: 
 Key of shared memory is 0 
 Process attached at x7ffe04fb000 
@@ -222,25 +156,18 @@ shared_memory=shmat(shmid,NULL,0); //process attached to shared memory segment
 printf("Process attached at %p\n",shared_memory); 
 printf("Data read from shared memory is : %s\n",(char *)shared_memory); 
 } 
-V Semester 
-Page 7 
-Operating System (Intergrated)Lab Manual- P21CS504 
-How it works? 
-shmget () here generates the identifier of the same segment as created in writer process. The 
-same key value must be given. The only change is, do not write IPC_CREAT as the shared 
-memory segment is already created. Next, shmat () attaches the shared segment to the current 
-process. After that, the data is printed from the shared segment. The output, we obtain is the 
-same data that is written while executing the Writer process. 
+
 Output 
 Key of Shared memory is 0 
 Process attached at 0x7f76b4292999 
 Data read from shared memory is: Hello World 
 V Semester 
 Page 8 
-Operating System (Intergrated)Lab Manual- P21CS504 
- 
-V Semester Page 9 
- 
+
+
+
+
+
 Program 4: 
  
 Implement the Producer & consumer Problem (Semaphore) 
@@ -272,9 +199,7 @@ while(choice !=3)
             case 1:  
                   if((in+1)%bufsize==out)  
                        printf("\n Buffer is Full"); 
-Operating System (Intergrated)Lab Manual- P21CS504 
  
-V Semester Page 10 
  
                   else 
                         {  
@@ -306,26 +231,9 @@ V Semester Page 10
  
  
  
-Operating System (Intergrated)Lab Manual- P21CS504 
 Program 5: 
 Implement the solution to dining philosopher’s problem using monitors. 
-Description: 
-The dining – philosophers problem is considered a classic synchronization problem because 
-it is an example of a large class of concurrency – control problems. It is a simple presentation 
-of the need to allocate several resources among several processes in a deadlock-free and 
-starvation free manner.  
-Consider five philosophers who spend their lives thinking and eating. The philosophers share 
-a circular table surrounded by five chairs, each belonging to one philosopher. In the centre of 
-the table is a bowl of rice, and the table is laid with five single chopsticks. When a 
-philosopher thinks, she does not interact with her colleagues. From time to time, a 
-philosopher gets hungry and tries to pick up the two chopsticks that are closest to her (the 
-chopsticks that are between her and her left and right neighbours). A philosopher may pick up 
-only one chopstick at a time. Obviously, she cannot pick up a chopstick that is already in the 
-hand of a neighbour. When a hungry philosopher has both her chopsticks at the same time, 
-she eats without releasing her chopsticks. When she is finished eating, she puts down both of 
-her chopsticks and starts thinking again. The dining-philosophers problem may lead to a 
-deadlock situation and hence some rules have to be framed to avoid the occurrence of 
-deadlock. 
+
 ALGORITHM: 
 Step 1: Start the program. 
 Step 2: Define the number of philosophers. 
@@ -337,11 +245,7 @@ ii. Acquire both chopsticks or.
 iii. Eat. 
 iv. restore the chopsticks. 
 v. If chopsticks aren’t free. 
-V Semester 
-Page 11 
-Operating System (Intergrated)Lab Manual- P21CS504 
  
-V Semester Page 12 
  
 Step 6: Wait till they are available. 
 Step 7: Stop the program. 
@@ -376,10 +280,7 @@ int main()
                 printf("Enter philosopher %d position: ",(i+1));  
                 scanf("%d", &hu[i]); status[hu[i]]=2;    
             }  
-             
-Operating System (Intergrated)Lab Manual- P21CS504 
- 
-V Semester Page 13 
+
  
  
 do{  
@@ -414,10 +315,7 @@ int one()
     }  
 }  
  
- 
-Operating System (Intergrated)Lab Manual- P21CS504 
- 
-V Semester Page 14 
+
  
  
 int two()  
@@ -452,9 +350,9 @@ for(i=0;i<howhung;i++)
  
  
  
-Operating System (Intergrated)Lab Manual- P21CS504 
 Program 6: 
 Implement the FCFS CPU Scheduling Algorithms 
+
 #include<stdio.h>  
 #include<conio.h>  
 main()  
@@ -486,25 +384,13 @@ printf("\nAverage Waiting Time -- %f", wtavg/n);
 printf("\nAverage Turnaround Time -- %f", tatavg/n);  
 getch();  
 } 
-V Semester 
-Page 15 
-Operating System (Intergrated)Lab Manual- P21CS504 
+
+
+
+
+
 Program 7: 
 Implement Bankers Algorithm for Deadlock Avoidance 
-DESCRIPTION  
-In a multiprogramming environment, several processes may compete for a finite number of 
-resources. A process requests resources; if the resources are not available at that time, the 
-process enters a waiting state. Sometimes, a waiting process is never again able to change 
-state, because the resources it has requested are held by other waiting processes. This 
-situation is called a deadlock. Deadlock avoidance is one of the techniques for handling 
-deadlocks. This approach requires that the operating system be given in advance additional 
-information concerning which resources a process will request and use during its lifetime. 
-With this additional knowledge, it can decide for each request whether or not the process 
-should wait. To decide whether the current request can be satisfied or must be delayed, the 
-system must consider the resources currently available, the resources currently allocated to 
-each process, and the future requests and releases of each process. Banker’s algorithm is a 
-deadlock avoidance algorithm that is applicable to a system with multiple instances of each 
-resource type. 
 #include<stdio.h> 
 #include<conio.h> 
 int max[100][100]; 
@@ -560,9 +446,7 @@ for(j=0;j<r;j++)
     scanf("%d",&avail[j]); 
     } 
 } 
-Operating System (Intergrated)Lab Manual- P21CS504 
  
-V Semester Page 18 
  
  
 void show() 
