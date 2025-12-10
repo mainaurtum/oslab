@@ -13,9 +13,27 @@ write (1,buff,nread);
 } 
  
 Commands: 
-cc  filename.c 
-./a.out 
+Ip address - 172.31.31.20
+user12
+csuser12
+vi pgname.c
+InserT button 
+//Write program
 
+
+
+Esc button
+:wq press enter
+
+cc pgname.c
+
+//Output 
+./a.out
+
+
+If error
+
+vi pgname.c
  
  
  
@@ -28,7 +46,6 @@ cc  filename.c
  
  
  
-Operating System (Intergrated)Lab Manual- P21CS504 
 Program 2: 
 Write a program to print 10 characters starting from the 10th character from a 
 file(lseek() system call) 
@@ -49,7 +66,48 @@ read(f,buff,10);
 write(1,buff,10); 
 } 
 
- 
+
+commands:
+Ip address - 172.31.31.20
+user12
+csuser12
+vi pgname.c
+InserT button 
+//Write program
+
+Replce seeking by pgname2.c
+
+Esc button
+:wq press enter
+
+cc pgname.c
+
+
+vi pgname2.c
+
+Printf("kuchh bhi 20 char se jayada ")
+
+esc button
+
+:wq press enter
+
+cc pgname2.c
+
+
+
+//Output 
+./a.out
+
+
+If error
+
+vi pgname.c
+
+
+
+
+
+
 Program 3: 
 Shared Memory for Writer Process 
 #include<stdio.h> 
@@ -67,9 +125,8 @@ int shmid;
 shmid=shmget((key_t)2345, 1024, 0666|IPC_CREAT);  
 
 printf("Key of shared memory is %d\n",shmid); 
-shared_memory=shmat(shmid,NULL,0);  //process attached to shared memory segment 
+shared_memory=shmat(shmid,NULL,0);   
 printf("Process attached at %p\n",shared_memory);  
-                     //this prints the address where th segment is attached with this process 
 printf("Enter some data to write to shared memory\n"); 
 read(0,buff,100); //get some input from user 
 strcpy(shared_memory,buff); //data written to shared memory 
@@ -103,15 +160,13 @@ printf("Process attached at %p\n",shared_memory);
 printf("Data read from shared memory is : %s\n",(char *)shared_memory); 
 } 
 
-shmget () here generates the identifier of the same segment as created in writer process. The 
-same key value must be given. The only change is, do not write IPC_CREAT as the shared 
-memory segment is already created. Next, shmat () attaches the shared segment to the current 
-process. After that, the data is printed from the shared segment. The output, we obtain is the 
-same data that is written while executing the Writer process. 
+
 Output 
 Key of Shared memory is 0 
 Process attached at 0x7f76b4292999 
 Data read from shared memory is: Hello World 
+
+
 
 
 
@@ -301,6 +356,8 @@ getch();
 
 
 
+
+
 Program 7: 
 Implement Bankers Algorithm for Deadlock Avoidance 
 
@@ -319,12 +376,6 @@ int main()
 int i,j; 
 printf("********** Banker's Algorithm ************\n"); 
 input(); 
-V Semester 
-Page 16 
-Operating System (Intergrated)Lab Manual- P21CS504 
- 
-V Semester Page 17 
- 
 show(); 
 cal(); 
 getch(); 
@@ -463,13 +514,15 @@ for(i=0;i<n;i++)
     { 
     printf("\n The system is in safe state"); 
     } 
-Operating System (Intergrated)Lab Manual- P21CS504 
 else 
 { 
 printf("\n Process are in dead lock"); 
 printf("\n System is in unsafe state"); 
 } 
 } 
+
+
+
 
 
 
@@ -548,9 +601,6 @@ for(i=1;i<=nb;i++)
 printf("Block %d:",i); 
 scanf("%d",&b[i]);  
 }  
-V Semester 
-Page 24 
-Operating System (Intergrated)Lab Manual- P21CS504 
 printf("Enter the size of the files :-\n");  
 for(i=1;i<=nf;i++)  
 {  
@@ -581,6 +631,7 @@ for(i=1;i<=nf;i++)
 printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d",i,f[i],ff[i],b[ff[i]],frag[i]);  
 getch(); 
 }      
+
 
 
 
@@ -697,7 +748,9 @@ getch();
 
 Program 10 
 Implement the following Disk Scheduling Algorithms: 
-a) SSTF Scheduling    b) SCAN Scheduling   
+a) SSTF Scheduling    b) SCAN Scheduling  
+
+
 A. SSTF Scheduling     
 
 #include<stdio.h> 
